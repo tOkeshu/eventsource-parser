@@ -9,5 +9,11 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event(None, None, 'somedata'))
         self.assertEqual(extra, '')
 
+    def testParseMultiLinedata(self):
+        ev = EventSource()
+        event, extra = ev.parse("data:some\ndata:data\n\n")
+        self.assertEqual(event, Event(None, None, 'some\ndata'))
+        self.assertEqual(extra, '')
+
 main()
 

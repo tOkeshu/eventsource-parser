@@ -6,5 +6,10 @@ Event = namedtuple('Event', ['id', 'type', 'data'])
 class EventSource(object):
 
     def parse(self, source):
-        return Event(None, None, 'somedata'), ''
+        data = ''
+        for line in source.splitlines():
+            if line.startswith('data:'):
+                data += line[5:] + '\n'
+        data = data[:-1]
+        return Event(None, None, data), ''
 
