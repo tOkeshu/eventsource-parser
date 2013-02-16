@@ -36,6 +36,15 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event(None, None, "another event"))
         self.assertEqual(extra, '');
 
+    def testRetryParsing(self):
+        ev = EventSource()
+        event, extra = ev.parse("retry: 10\ndata: an event\n\ndata: last event\n\n")
+        self.assertEqual(event, Event(None, None, "an event"))
+        self.assertEqual(extra, 'retry: 10\n\ndata: last event\n\n');
+        event, extra = ev.parse(extra)
+        self.assertEqual(event, Event(None, 'retry', 10))
+        self.assertEqual(extra, 'data: last event\n\n');
+
 
 main()
 

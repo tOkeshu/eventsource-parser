@@ -6,10 +6,11 @@ Event = namedtuple('Event', ['id', 'type', 'data'])
 class EventSource(object):
 
     def parse(self, source):
-        self.data = ''
+        self.data = []
         self.type = None
         self.id = None
         self.extra = ''
+        self.retry = None
 
         dispatch = False
         lines = source.splitlines()
@@ -26,12 +27,22 @@ class EventSource(object):
                 value = value[1:]
 
             if field == 'data':
-                self.data += value + '\n'
+                self.data.append(value)
             elif field == 'event':
                 self.type = value
             elif field == 'id':
                 self.id = value
+            elif field == 'retry':
+                self.retry = int(value)
 
-        self.data = self.data[:-1]
+        if self.data:
+            self.data = '\n'.join(self.data)
+
+        if self.retry:
+            if self.type or self.data:
+                self.extra = ('retry: %s\n\n' % self.retry) + self.extra
+            else:
+                self.type, self.data = 'retry', self.retry
+
         return Event(self.id, self.type, self.data), self.extra
 
