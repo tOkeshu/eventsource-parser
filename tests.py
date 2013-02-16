@@ -15,5 +15,11 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event(None, None, 'some\ndata'))
         self.assertEqual(extra, '')
 
+    def testParseType(self):
+        ev = EventSource()
+        event, extra = ev.parse("event: event-type\ndata: somedata\n\n")
+        self.assertEqual(event, Event(None, "event-type", "somedata"))
+        self.assertEqual(extra, '');
+
 main()
 
