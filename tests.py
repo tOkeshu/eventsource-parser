@@ -21,5 +21,11 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event(None, "event-type", "somedata"))
         self.assertEqual(extra, '');
 
+    def testParseId(self):
+        ev = EventSource()
+        event, extra = ev.parse("id: 1234\ndata: somedata\n\n")
+        self.assertEqual(event, Event("1234", None, "somedata"))
+        self.assertEqual(extra, '');
+
 main()
 

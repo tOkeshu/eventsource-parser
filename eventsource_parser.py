@@ -8,12 +8,13 @@ class EventSource(object):
     def __init__(self):
         self.data = ''
         self.type = None
+        self.id = None
 
     def parse(self, source):
         for line in source.splitlines():
             if not line:
                 self.data = self.data[:-1]
-                return Event(None, self.type, self.data), ''
+                return Event(self.id, self.type, self.data), ''
 
             field, value = line.split(':', 1)
             if value[0] == ' ':
@@ -23,4 +24,6 @@ class EventSource(object):
                 self.data += value + '\n'
             elif field == 'event':
                 self.type = value
+            elif field == 'id':
+                self.id = value
 
