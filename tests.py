@@ -27,5 +27,15 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event("1234", None, "somedata"))
         self.assertEqual(extra, '');
 
+    def testParseMultipleEvents(self):
+        ev = EventSource()
+        event, extra = ev.parse("data: an event\n\ndata: another event\n\n")
+        self.assertEqual(event, Event(None, None, "an event"))
+        self.assertEqual(extra, 'data: another event\n\n');
+        event, extra = ev.parse(extra)
+        self.assertEqual(event, Event(None, None, "another event"))
+        self.assertEqual(extra, '');
+
+
 main()
 

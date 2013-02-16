@@ -5,16 +5,21 @@ Event = namedtuple('Event', ['id', 'type', 'data'])
 
 class EventSource(object):
 
-    def __init__(self):
+    def parse(self, source):
         self.data = ''
         self.type = None
         self.id = None
+        self.extra = ''
 
-    def parse(self, source):
-        for line in source.splitlines():
+        dispatch = False
+        lines = source.splitlines()
+        for line in lines:
+            if dispatch:
+                self.extra += line + '\n'
+                continue
             if not line:
-                self.data = self.data[:-1]
-                return Event(self.id, self.type, self.data), ''
+                dispatch = True
+                continue
 
             field, value = line.split(':', 1)
             if value[0] == ' ':
@@ -26,4 +31,7 @@ class EventSource(object):
                 self.type = value
             elif field == 'id':
                 self.id = value
+
+        self.data = self.data[:-1]
+        return Event(self.id, self.type, self.data), self.extra
 
