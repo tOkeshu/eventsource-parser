@@ -45,6 +45,11 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, Event(None, 'retry', 10))
         self.assertEqual(extra, 'data: last event\n\n');
 
+    def testIncompleteEvent(self):
+        ev = EventSource()
+        event, extra = ev.parse("data: miss an empty line to dispatch\n")
+        self.assertEqual(event, None)
+        self.assertEqual(extra, "data: miss an empty line to dispatch\n")
 
 main()
 

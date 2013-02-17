@@ -35,6 +35,9 @@ class EventSource(object):
             elif field == 'retry':
                 self.retry = int(value)
 
+        if not dispatch:
+            return None, source
+
         if self.data:
             self.data = '\n'.join(self.data)
 
