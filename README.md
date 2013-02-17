@@ -11,7 +11,7 @@ A framework agnostic EventSource Parser.
 
     id: 2
     event: chat
-    data: fine, thanks you
+    data: fine, thank you
 
     :ping
     """
@@ -20,10 +20,10 @@ A framework agnostic EventSource Parser.
     >>> event
     Event(1, 'chat', 'hey, how are you?')
     >>> rest
-    "id: 2\nevent: chat\ndata: fine, thanks you\n\n:ping\n"
+    "id: 2\nevent: chat\ndata: fine, thank you\n\n:ping\n"
     >>> event, rest = parse(rest)
     >>> event
-    Event(2, 'chat', 'fine, thanks you')
+    Event(2, 'chat', 'fine, thank you')
     >>> rest
     ":ping\n"
     >>> event, rest = parse(rest)
