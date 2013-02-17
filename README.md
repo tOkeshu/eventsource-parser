@@ -15,18 +15,18 @@ A framework agnostic EventSource Parser.
 
     :ping
     """
-    >>> ev = EventSource
-    >>> event, rest = ev.parse(source)
+    >>> from eventsource_parser import parse
+    >>> event, rest = parse(source)
     >>> event
     Event(1, 'chat', 'hey, how are you?')
     >>> rest
     "id: 2\nevent: chat\ndata: fine, thanks you\n\n:ping\n"
-    >>> event, rest = ev.parse(rest)
+    >>> event, rest = parse(rest)
     >>> event
     Event(2, 'chat', 'fine, thanks you')
     >>> rest
     ":ping\n"
-    >>> event, rest = ev.parse(rest)
+    >>> event, rest = parse(rest)
     >>> event
     None
     >>> rest
