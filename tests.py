@@ -44,5 +44,10 @@ class EventSourceTests(TestCase):
         self.assertEqual(event, None)
         self.assertEqual(extra, "data: miss an empty line to dispatch\n")
 
+    def testEmptyFields(self):
+        event, extra = parse("nothing")
+        self.assertEqual(event, None)
+        self.assertEqual(extra, "nothing")
+
 main()
 

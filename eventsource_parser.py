@@ -21,8 +21,12 @@ def parse(source):
             dispatch = True
             continue
 
-        field, value = line.split(':', 1)
-        if value[0] == ' ':
+        if not ':' in line:
+            field, value = line, ''
+        else:
+            field, value = line.split(':', 1)
+
+        if value and value[0] == ' ':
             value = value[1:]
 
         if field == 'data':
