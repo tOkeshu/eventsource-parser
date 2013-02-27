@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from collections import namedtuple
 
 
@@ -9,6 +11,9 @@ def parse(source):
     data  = []
     retry = None
     extra = ''
+
+    if not isinstance(source, unicode):
+        source = unicode(source, 'utf-8')
 
     dispatch = False
     cursor   = 0
@@ -47,7 +52,7 @@ def parse(source):
 
     if retry:
         if etype or data:
-            extra = ('retry: %s\n\n' % retry) + extra
+            extra = (u'retry: %s\n\n%s' % (retry, extra))
         else:
             etype, data = 'retry', retry
 
