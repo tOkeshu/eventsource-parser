@@ -11,15 +11,14 @@ def parse(source):
     extra = ''
 
     dispatch = False
-    lines = source.splitlines()
+    cursor   = 0
+    lines    = source.splitlines()
 
     for line in lines:
-        if dispatch:
-            extra += line + '\n'
-            continue
         if not line:
             dispatch = True
-            continue
+            extra = source[cursor+1:]
+            break
 
         if not ':' in line:
             field, value = line, ''
@@ -37,6 +36,8 @@ def parse(source):
             eid = value
         elif field == 'retry':
             retry = int(value)
+
+        cursor += len(line) + 1
 
     if not dispatch:
         return None, source
