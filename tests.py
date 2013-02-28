@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
 from unittest import TestCase, main
 from eventsource_parser import Event, parse
 
@@ -53,7 +53,12 @@ class EventSourceTests(TestCase):
     def testUnicode(self):
         event, extra = parse(u"data: cet été il a fait beau à Lyon\n\n")
         self.assertEqual(event, Event(None, None, u"cet été il a fait beau à Lyon"))
-        self.assertEqual(extra, u"");
+        self.assertEqual(extra, u"")
+
+    def testEmptyEvent(self):
+        event, extra = parse(":comment\n\ndata: an event\n\n")
+        self.assertEqual(event, None)
+        self.assertEqual(extra, "data: an event\n\n")
 
 main()
 

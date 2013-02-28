@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# encoding: utf-8
 
 from collections import namedtuple
 
@@ -46,6 +46,8 @@ def parse(source):
 
     if not dispatch:
         return None, source
+    if (eid, etype, data, retry) == (None, None, [], None):
+        return None, extra
 
     if data:
         data = '\n'.join(data)
