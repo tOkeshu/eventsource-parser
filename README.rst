@@ -2,7 +2,9 @@ EventSource Parser
 ==================
 
 A framework agnostic EventSource Parser.
-```python
+
+::
+
     >>> source =
     """
     id: 1
@@ -31,7 +33,7 @@ A framework agnostic EventSource Parser.
     None
     >>> rest
     ""
-```
+
 
 License
 -------
